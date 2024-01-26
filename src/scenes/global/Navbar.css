@@ -1,0 +1,34 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  background-color: rgb(225, 225, 225, 0.95);
+  color: black;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+
+.logo-icon {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+}
+
+.logo:hover {
+  cursor: pointer;
+}
+
+.navbar-icon {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 20px;
+  z-index: 2;
+}
