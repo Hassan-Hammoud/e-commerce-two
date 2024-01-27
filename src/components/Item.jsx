@@ -21,76 +21,81 @@ const Item = ({ item, width }) => {
   const {
     data: {
       attributes: {
-        format: {
+        formats: {
           medium: { url },
         },
       },
     },
   } = image;
 
-  return (
-    <Box width={width}>
-      <Box
-        position="relative"
-        onMouseOver={() => setIsHovered(true)}
-        onMouseOut={() => setIsHovered(false)}
-      >
-        <img
-          alt={item.name}
-          width="300px"
-          height="400px"
-          src={`http://localhost:1337${url}`}
-          onClick={() => navigate(`/item/${item.id}`)}
-          style={{ cursor: "pointer" }}
-        />
+  if (url) {
+    return (
+      <Box width={width}>
         <Box
-          display={isHovered ? "blocked" : "none"}
-          position="absolute"
-          bottom="10%"
-          left="0"
-          width="100%"
-          padding="0 5%"
+          position="relative"
+          onMouseOver={() => setIsHovered(true)}
+          onMouseOut={() => setIsHovered(false)}
         >
-          <Box display="flex" justifyContent="space-between">
-            {/* Amount  */}
-            <Box
-              display="flex"
-              alignItems="center"
-              backgroundColor={shades.neutral[100]}
-              borderRadius="3px"
-            >
-              <IconButton onClick={() => setCount(Math.max(count - 1, 1))}>
-                <RemoveIcon />
-              </IconButton>
-              <Typography color={shades.primary[300]}>{count}</Typography>
-              <IconButton onClick={() => setCount(count + 1)}>
-                <AddIcon />
-              </IconButton>
+          <img
+            alt={item.name}
+            width="300px"
+            height="400px"
+            src={`http://localhost:1337${url}`}
+            onClick={() => navigate(`/item/${item.id}`)}
+            style={{ cursor: "pointer" }}
+          />
+          <Box
+            display={isHovered ? "block" : "none"}
+            position="absolute"
+            bottom="10%"
+            left="0"
+            width="100%"
+            padding="0 5%"
+          >
+            <Box display="flex" justifyContent="space-between">
+              {/* Amount  */}
+              <Box
+                display="flex"
+                alignItems="center"
+                backgroundColor={shades.neutral[100]}
+                borderRadius="3px"
+              >
+                <IconButton onClick={() => setCount(Math.max(count - 1, 1))}>
+                  <RemoveIcon />
+                </IconButton>
+                <Typography color={shades.primary[300]}>{count}</Typography>
+                <IconButton onClick={() => setCount(count + 1)}>
+                  <AddIcon />
+                </IconButton>
+              </Box>
+              {/* Button  */}
+              <Button
+                onClick={() => {
+                  dispatch(addToCart({ item: { ...item, count } }));
+                }}
+                sx={{ backgroundColor: shades.primary[300], color: "white" }}
+              >
+                ADD TO CART
+              </Button>
             </Box>
-            {/* Button  */}
-            <Button
-              onClick={() => {
-                dispatch(addToCart({ item: { ...item, count } }));
-              }}
-              sx={{ backgroundColor: shades.primary[300], color: "white" }}
-            >
-              ADD TO CART
-            </Button>
           </Box>
         </Box>
+        {/*  */}
+        <Box mt="3px">
+          <Typography variant="subtitle2" color={neutral.dark}>
+            {category
+              .replace(/([A-Z])/g, "$1")
+              .replace(/^./, (str) => str.toUpperCase())}
+          </Typography>
+          <Typography>{name}</Typography>
+          <Typography fontWeight="bold">{price}</Typography>
+        </Box>
       </Box>
-      {/*  */}
-      <Box mt="3px">
-        <Typography variant="subtitle2" color={neutral.dark}>
-          {category
-            .replace(/([A-Z])/g, "$1")
-            .replace(/^./, (str) => str.toUpperCase())}
-        </Typography>
-        <Typography>{name}</Typography>
-        <Typography fontWeight="bold">{price}</Typography>
-      </Box>
-    </Box>
-  );
+    );
+  } else {
+    console.error("Image URL is undefined or has unexpected structure:", image);
+    return null;
+  }
 };
 
 export default Item;

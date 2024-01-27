@@ -5,7 +5,6 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { shades } from "../../theme";
-import NavigateNext from "@mui/icons-material/NavigateNext";
 
 // import all image from assets folder
 const importAll = (r) =>
@@ -28,6 +27,8 @@ const MainCarousel = () => {
       showThumbs={false}
       showIndicators={false}
       showStatus={false}
+      autoPlay={true}
+      interval={3000}
       renderArrowPrev={(onClickHandler, hasPrev, label) => (
         <IconButton
           onClick={onClickHandler}
